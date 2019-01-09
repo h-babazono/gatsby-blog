@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "gatsby-blog-5b0ce",
+    "prod": "gatsby-blog-prod"
+  }
+}
