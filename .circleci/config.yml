@@ -26,12 +26,30 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
+      - run: npm install
+      - run:
+          name: 'Install Dependecies'
+          command: npm install --save-dev firebase-tools
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
-      # run tests!
-      - run: yarn test
+
+      - run:
+          name: 'Build Client Code(gatsby によるビルド実行)'
+          command: gatsby build
+      - run:
+          name: 'Deploy to Hosting'
+          command: >- 
+              ln -s ./node_modules/firebase-tools/bin/firebase . &&
+              ./firebase deploy --only hosting --project "gatsby-blog-5b0ce" --token "1/1n3cOguxPw_alaSuyvba9mIB9D-MpQQz0CVRPFJi8vY"
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - deploy_to_stg:
+          filters:
+            branches:
+              only: master
