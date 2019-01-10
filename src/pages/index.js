@@ -29,7 +29,7 @@ class BlogIndex extends React.Component {
                 }}
               >
                 <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                  {title}
+                  {title} Circle CI Test !!
                 </Link>
               </h3>
               <small>{node.frontmatter.date}</small>
