@@ -38,12 +38,11 @@ jobs:
 
       - run:
           name: 'Build Client Code(gatsby によるビルド実行)'
-          command: gatsby build
+          command: npx gatsby build
       - run:
           name: 'Deploy to Hosting'
           command: >- 
-              ln -s ./node_modules/firebase-tools/bin/firebase . &&
-              ./firebase deploy --only hosting --project "gatsby-blog-5b0ce" --token "1/1n3cOguxPw_alaSuyvba9mIB9D-MpQQz0CVRPFJi8vY"
+              npx firebase deploy --only hosting --project "gatsby-blog-5b0ce" --token "1/1n3cOguxPw_alaSuyvba9mIB9D-MpQQz0CVRPFJi8vY"
 
 workflows:
   version: 2
