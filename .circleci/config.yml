@@ -52,4 +52,4 @@ workflows:
       - deploy_to_stg:
           filters:
             branches:
-              only: master
+              only: staging
