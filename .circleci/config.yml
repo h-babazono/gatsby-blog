@@ -26,27 +26,27 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run:
-          name: show current directory
-          command: pwd
+      # - run:
+      #     name: show current directory
+      #     command: pwd
 
-      - run: npm install
-      - run:
-          name: 'Install Dependecies'
-          command: npm install --save-dev firebase-tools
+      # - run: npm install
+      # - run:
+      #     name: 'Install Dependecies'
+      #     command: npm install --save-dev firebase-tools
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      # - save_cache:
+      #     paths:
+      #       - node_modules
+      #     key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run:
-          name: 'Build Client Code(gatsby によるビルド実行)'
-          command: npx gatsby build
-      - run:
-          name: 'Deploy to Hosting'
-          command: >- 
-              npx firebase deploy --only hosting --project "gatsby-blog-5b0ce" --token "1/1n3cOguxPw_alaSuyvba9mIB9D-MpQQz0CVRPFJi8vY"
+      # - run:
+      #     name: 'Build Client Code(gatsby によるビルド実行)'
+      #     command: npx gatsby build
+      # - run:
+      #     name: 'Deploy to Hosting'
+      #     command: >- 
+      #         npx firebase deploy --only hosting --project "gatsby-blog-5b0ce" --token "1/1n3cOguxPw_alaSuyvba9mIB9D-MpQQz0CVRPFJi8vY"
 
 workflows:
   version: 2
