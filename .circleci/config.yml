@@ -66,7 +66,7 @@ jobs:
           command: git merge master
       - run:
           name: delete staging tag
-          command: git tag -d staging
+          command: git tag -d staging || echo "there's no staging tag"
       - run:
           name: add staging tag
           command: git tag staging
@@ -95,7 +95,7 @@ jobs:
           command: git merge staging
       - run:
           name: delete production tag
-          command: git tag -d production 
+          command: git tag -d production || echo "there's no production tag"
       - run:
           name: add production tag
           command: git tag production
@@ -118,7 +118,7 @@ jobs:
           command: git checkout $(git rev-list -n 1 staging)
       - run:
           name: delete staging tag
-          command: git tag -d staging
+          command: git tag -d staging || echo "there's no staging tag"
       - run:
           name: checkout most recent commit
           command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
@@ -144,7 +144,7 @@ jobs:
           command: git checkout $(git rev-list -n 1 production)
       - run:
           name: delete production tag
-          command: git tag -d production
+          command: git tag -d production || echo "there's no production tag"
       - run:
           name: checkout most recent commit
           command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
