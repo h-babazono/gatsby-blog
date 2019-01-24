@@ -72,7 +72,7 @@ jobs:
           command: git tag current/stg
       - run:
           name: push to staging branch
-          command: git push origin -u staging
+          command: git push origin -u staging --tags
       # firebase deploy
 
   deploy_to_production:
@@ -101,7 +101,7 @@ jobs:
           command: git tag current/prod
       - run:
           name: push to production branch
-          command: git push origin -u production
+          command: git push origin -u production --tags
       # firebase deploy
 
   rollback_stg:
@@ -127,7 +127,7 @@ jobs:
           command: git tag current/stg
       - run:
           name: push to staging branch
-          command: git push origin -u staging
+          command: git push origin -u staging --tags
       # firebase deploy
 
   rollback_prod:
@@ -153,7 +153,7 @@ jobs:
           command: git tag current/prod
       - run:
           name: push to production branch
-          command: git push origin -u prodcution
+          command: git push origin -u prodcution --tags
       # firebase deploy
 
 workflows:
