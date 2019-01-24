@@ -60,7 +60,7 @@ jobs:
       # test
       - run:
           name: change branch to staging
-          command: git branch staging
+          command: git checkout staging
       - run:
           name: merge master to staging
           command: git merge master
@@ -89,7 +89,7 @@ jobs:
           command: git checkout $(git rev-list -n 1 staging)
       - run:
           name: change branch to production
-          command: git branch production
+          command: git checkout production
       - run:
           name: merge staging to production
           command: git merge staging
