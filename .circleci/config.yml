@@ -64,10 +64,10 @@ jobs:
       - run:
           name: merge master to staging
           command: |
-            git config user.email "circleci@da-vinci-studio.com"
-            git config user.name "circleci"
+            # git config user.email "circleci@da-vinci-studio.com"
+            # git config user.name "circleci"
             git merge master
-            git commit -m 'Merge master to staging on ci.'
+            # git commit -m 'Merge master to staging on ci.'
       # - run: 
       #     name: git commit
       #     command: |
@@ -106,10 +106,10 @@ jobs:
       - run:
           name: merge staging to production
           command: |
-            git config user.email "circleci@da-vinci-studio.com"
-            git config user.name "circleci"
+            # git config user.email "circleci@da-vinci-studio.com"
+            # git config user.name "circleci"
             git merge current/stg
-            git commit -m 'Merge staging to production on ci.'
+            # git commit -m 'Merge staging to production on ci.'
       # - run: 
       #     name: git commit
       #     command: |
