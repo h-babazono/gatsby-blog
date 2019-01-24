@@ -63,7 +63,10 @@ jobs:
           command: git checkout staging
       - run:
           name: merge master to staging
-          command: git merge master --no-ff
+          command: |
+            git config user.email "circleci@da-vinci-studio.com"
+            git config user.name "circleci"
+            git merge master --no-ff
       # - run: 
       #     name: git commit
       #     command: |
@@ -101,7 +104,10 @@ jobs:
           command: git checkout production
       - run:
           name: merge staging to production
-          command: git merge current/stg --no-ff
+          command: |
+            git config user.email "circleci@da-vinci-studio.com"
+            git config user.name "circleci"
+            git merge current/stg --no-ff
       # - run: 
       #     name: git commit
       #     command: |
