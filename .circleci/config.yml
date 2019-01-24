@@ -63,13 +63,13 @@ jobs:
           command: git checkout staging
       - run:
           name: merge master to staging
-          command: git merge master
-      - run: 
-          name: git commit
-          command: |
-            git config user.email "circleci@da-vinci-studio.com"
-            git config user.name "circleci"
-            git commit -m 'Merge master to staging on ci.'
+          command: git merge master --no-ff
+      # - run: 
+      #     name: git commit
+      #     command: |
+      #       git config user.email "circleci@da-vinci-studio.com"
+      #       git config user.name "circleci"
+      #       git commit -m 'Merge master to staging on ci.'
       - run:
           name: delete current/stg tag
           command: git tag -d current/stg || echo "there's no current/stg tag"
@@ -101,13 +101,13 @@ jobs:
           command: git checkout production
       - run:
           name: merge staging to production
-          command: git merge staging
-      - run: 
-          name: git commit
-          command: |
-            git config user.email "circleci@da-vinci-studio.com"
-            git config user.name "circleci"      
-            git commit -m 'Merge staging to master on ci.'
+          command: git merge current/stg --no-ff
+      # - run: 
+      #     name: git commit
+      #     command: |
+      #       git config user.email "circleci@da-vinci-studio.com"
+      #       git config user.name "circleci"      
+      #       git commit -m 'Merge staging to master on ci.'
       - run:
           name: delete current/prod tag
           command: git tag -d current/prod || echo "there's no current/prod tag"
