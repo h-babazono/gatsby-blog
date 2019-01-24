@@ -65,11 +65,11 @@ jobs:
           name: merge master to staging
           command: git merge master
       - run:
-          name: delete current:stg tag
-          command: git tag -d current:stg || echo "there's no current:stg tag"
+          name: delete current/stg tag
+          command: git tag -d current/stg || echo "there's no current/stg tag"
       - run:
-          name: add current:stg tag
-          command: git tag current:stg
+          name: add current/stg tag
+          command: git tag current/stg
       - run:
           name: push to staging branch
           command: git push origin -u staging
@@ -86,7 +86,7 @@ jobs:
       # test
       - run:
           name: checkout staging branch
-          command: git checkout $(git rev-list -n 1 current:stg)
+          command: git checkout $(git rev-list -n 1 current/stg)
       - run:
           name: change branch to production
           command: git checkout production
@@ -94,11 +94,11 @@ jobs:
           name: merge staging to production
           command: git merge staging
       - run:
-          name: delete current:prod tag
-          command: git tag -d current:prod || echo "there's no current:prod tag"
+          name: delete current/prod tag
+          command: git tag -d current/prod || echo "there's no current/prod tag"
       - run:
-          name: add current:prod tag
-          command: git tag current:prod
+          name: add current/prod tag
+          command: git tag current/prod
       - run:
           name: push to production branch
           command: git push origin -u production
@@ -115,16 +115,16 @@ jobs:
       # test
       - run:
           name: checkout staging branch
-          command: git checkout $(git rev-list -n 1 current:stg)
+          command: git checkout $(git rev-list -n 1 current/stg)
       - run:
-          name: delete current:stg tag
-          command: git tag -d current:stg || echo "there's no current:stg tag"
+          name: delete current/stg tag
+          command: git tag -d current/stg || echo "there's no current/stg tag"
       - run:
           name: checkout most recent commit
           command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
       - run:
-          name: add current:stg tag
-          command: git tag current:stg
+          name: add current/stg tag
+          command: git tag current/stg
       - run:
           name: push to staging branch
           command: git push origin -u staging
@@ -141,16 +141,16 @@ jobs:
       # test
       - run:
           name: checkout production branch
-          command: git checkout $(git rev-list -n 1 current:prod)
+          command: git checkout $(git rev-list -n 1 current/prod)
       - run:
-          name: delete current:prod tag
-          command: git tag -d current:prod || echo "there's no current:prod tag"
+          name: delete current/prod tag
+          command: git tag -d current/prod || echo "there's no current/prod tag"
       - run:
           name: checkout most recent commit
           command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
       - run:
-          name: add current:prod tag
-          command: git tag current:prod
+          name: add current/prod tag
+          command: git tag current/prod
       - run:
           name: push to production branch
           command: git push origin -u prodcution
