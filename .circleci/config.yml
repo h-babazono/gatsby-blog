@@ -66,7 +66,10 @@ jobs:
           command: git merge master
       - run: 
           name: git commit
-          command: git commit -m 'Merge master to staging on ci.'
+          command: |
+            git config user.email "circleci@da-vinci-studio.com"
+            git config user.name "circleci"
+            git commit -m 'Merge master to staging on ci.'
       - run:
           name: delete current/stg tag
           command: git tag -d current/stg || echo "there's no current/stg tag"
@@ -101,7 +104,10 @@ jobs:
           command: git merge staging
       - run: 
           name: git commit
-          command: git commit -m 'Merge staging to master on ci.'
+          command: |
+            git config user.email "circleci@da-vinci-studio.com"
+            git config user.name "circleci"      
+            git commit -m 'Merge staging to master on ci.'
       - run:
           name: delete current/prod tag
           command: git tag -d current/prod || echo "there's no current/prod tag"
@@ -132,11 +138,8 @@ jobs:
           name: delete current/stg tag
           command: git tag -d current/stg || echo "there's no current/stg tag"
       - run:
-          name: checkout most recent commit
-          command: |
-            git config user.email "circleci@da-vinci-studio.com"
-            git config user.name "circleci"          
-            git checkout $(git log current/stg --oneline --skip=1 --max-count=1 | awk '{print $1}')
+          name: checkout most recent commit    
+          command: git checkout $(git log current/stg --oneline --skip=1 --max-count=1 | awk '{print $1}')
           # command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
       - run:
           name: add current/stg tag
@@ -166,10 +169,7 @@ jobs:
           command: git tag -d current/prod || echo "there's no current/prod tag"
       - run:
           name: checkout most recent commit
-          command: |
-            git config user.email "circleci@da-vinci-studio.com"
-            git config user.name "circleci"
-            git checkout $(git log current/prod --oneline --skip=1 --max-count=1 | awk '{print $1}')
+          command: git checkout $(git log current/prod --oneline --skip=1 --max-count=1 | awk '{print $1}')
           # command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
       - run:
           name: add current/prod tag
