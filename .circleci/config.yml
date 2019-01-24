@@ -133,7 +133,10 @@ jobs:
           command: git tag -d current/stg || echo "there's no current/stg tag"
       - run:
           name: checkout most recent commit
-          command: git checkout $(git log current/stg --oneline --skip=1 --max-count=1 | awk '{print $1}')
+          command: |
+            git config user.email "circleci@da-vinci-studio.com"
+            git config user.name "circleci"          
+            git checkout $(git log current/stg --oneline --skip=1 --max-count=1 | awk '{print $1}')
           # command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
       - run:
           name: add current/stg tag
@@ -163,7 +166,10 @@ jobs:
           command: git tag -d current/prod || echo "there's no current/prod tag"
       - run:
           name: checkout most recent commit
-          command: git checkout $(git log current/prod --oneline --skip=1 --max-count=1 | awk '{print $1}')
+          command: |
+            git config user.email "circleci@da-vinci-studio.com"
+            git config user.name "circleci"
+            git checkout $(git log current/prod --oneline --skip=1 --max-count=1 | awk '{print $1}')
           # command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
       - run:
           name: add current/prod tag
