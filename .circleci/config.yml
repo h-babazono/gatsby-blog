@@ -71,6 +71,9 @@ jobs:
           name: add current/stg tag
           command: git tag current/stg
       - run:
+          name: delete remote current/stg tag
+          command: git push origin :refs/tags/current/stg || echo "there's no current/stg tag"
+      - run:
           name: push to staging branch
           command: git push origin -u staging --tags
       # firebase deploy
@@ -100,6 +103,9 @@ jobs:
           name: add current/prod tag
           command: git tag current/prod
       - run:
+          name: delete remote current/prod tag
+          command: git push origin :refs/tags/current/prod || echo "there's no current/prod tag"
+      - run:
           name: push to production branch
           command: git push origin -u production --tags
       # firebase deploy
@@ -126,6 +132,9 @@ jobs:
           name: add current/stg tag
           command: git tag current/stg
       - run:
+          name: delete remote current/stg tag
+          command: git push origin :refs/tags/current/stg || echo "there's no current/stg tag"
+      - run:
           name: push to staging branch
           command: git push origin -u staging --tags
       # firebase deploy
@@ -151,6 +160,9 @@ jobs:
       - run:
           name: add current/prod tag
           command: git tag current/prod
+      - run:
+          name: delete remote current/prod tag
+          command: git push origin :refs/tags/current/prod || echo "there's no current/prod tag"
       - run:
           name: push to production branch
           command: git push origin -u prodcution --tags
