@@ -121,13 +121,14 @@ jobs:
       # test
       - run:
           name: checkout staging branch
-          command: git checkout $(git rev-list -n 1 current/stg)
+          command: git checkout current/stg
       - run:
           name: delete current/stg tag
           command: git tag -d current/stg || echo "there's no current/stg tag"
       - run:
           name: checkout most recent commit
-          command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
+          command: git checkout $(git log --oneline --max-count=1 | awk '{print $1}')
+          # command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
       - run:
           name: add current/stg tag
           command: git tag current/stg
@@ -150,13 +151,14 @@ jobs:
       # test
       - run:
           name: checkout production branch
-          command: git checkout $(git rev-list -n 1 current/prod)
+          command: git checkout current/prod
       - run:
           name: delete current/prod tag
           command: git tag -d current/prod || echo "there's no current/prod tag"
       - run:
           name: checkout most recent commit
-          command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
+          command: git checkout $(git log --oneline --max-count=1 | awk '{print $1}')
+          # command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
       - run:
           name: add current/prod tag
           command: git tag current/prod
