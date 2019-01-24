@@ -66,7 +66,8 @@ jobs:
           command: |
             git config user.email "circleci@da-vinci-studio.com"
             git config user.name "circleci"
-            git merge master --no-ff
+            git merge master
+            git commit -m 'Merge master to staging on ci.'
       # - run: 
       #     name: git commit
       #     command: |
@@ -107,7 +108,8 @@ jobs:
           command: |
             git config user.email "circleci@da-vinci-studio.com"
             git config user.name "circleci"
-            git merge current/stg --no-ff
+            git merge current/stg
+            git commit -m 'Merge staging to production on ci.'
       # - run: 
       #     name: git commit
       #     command: |
