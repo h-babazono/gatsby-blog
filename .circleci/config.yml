@@ -84,7 +84,7 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      # - checkout
+      - checkout
       # build
       # test
       - run:
@@ -116,7 +116,7 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      # - checkout
+      - checkout
       # build
       # test
       - run:
@@ -145,7 +145,7 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      # - checkout
+      - checkout
       # build
       # test
       - run:
