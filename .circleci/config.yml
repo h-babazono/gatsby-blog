@@ -136,7 +136,7 @@ jobs:
           command: git push origin :refs/tags/current/stg || echo "there's no current/stg tag"
       - run:
           name: push to staging branch
-          command: git push origin -u staging --tags
+          command: git push origin --tags
       # firebase deploy
 
   rollback_prod:
@@ -165,7 +165,7 @@ jobs:
           command: git push origin :refs/tags/current/prod || echo "there's no current/prod tag"
       - run:
           name: push to production branch
-          command: git push origin -u prodcution --tags
+          command: git push origin --tags
       # firebase deploy
 
 workflows:
