@@ -4,35 +4,28 @@
 #
 version: 2
 jobs:
-  deploy_to_stg:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:10.15
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+  # deploy_to_stg:
+  #   docker:
+  #     - image: circleci/node:10.15
+  #   working_directory: ~/repo
 
-    working_directory: ~/repo
+  #   steps:
+  #     - run:
+  #         name: show result of ls cmd
+  #         command: ls
 
-    steps:
-      - run:
-          name: show result of ls cmd
-          command: ls
+  #     - checkout
 
-      - checkout
+  #     - run:
+  #         name: show result of ls cmd after checkout
+  #         command: ls
 
-      - run:
-          name: show result of ls cmd after checkout
-          command: ls
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      # # Download and cache dependencies
+      # - restore_cache:
+      #     keys:
+      #     - v1-dependencies-{{ checksum "package.json" }}
+      #     # fallback to using the latest cache if no exact match is found
+      #     - v1-dependencies-
 
       # - run:
       #     name: show current directory
@@ -56,6 +49,113 @@ jobs:
       #     command: >- 
       #         npx firebase deploy --only hosting --project "gatsby-blog-5b0ce" --token "1/1n3cOguxPw_alaSuyvba9mIB9D-MpQQz0CVRPFJi8vY"
 
+  deploy_to_stg:
+    docker:
+      - image: circleci/node:10.15
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      # build
+      # test
+      - run:
+          name: change branch to staging
+          command: git branch staging
+      - run:
+          name: merge master to staging
+          command: git merge master
+      - run:
+          name: delete staging tag
+          command: git tag -d staging
+      - run:
+          name: add staging tag
+          command: git tag staging
+      - run:
+          name: push to staging branch
+          command: git push origin -u staging
+      # firebase deploy
+
+  deploy_to_production:
+    docker:
+      - image: circleci/node:10.15
+    working_directory: ~/repo
+
+    steps:
+      # - checkout
+      # build
+      # test
+      - run:
+          name: checkout staging branch
+          command: git checkout $(git rev-list -n 1 staging)
+      - run:
+          name: change branch to production
+          command: git branch production
+      - run:
+          name: merge staging to production
+          command: git merge staging
+      - run:
+          name: delete production tag
+          command: git tag -d production 
+      - run:
+          name: add production tag
+          command: git tag production
+      - run:
+          name: push to production branch
+          command: git push origin -u production
+      # firebase deploy
+
+  rollback_stg:
+    docker:
+      - image: circleci/node:10.15
+    working_directory: ~/repo
+
+    steps:
+      # - checkout
+      # build
+      # test
+      - run:
+          name: checkout staging branch
+          command: git checkout $(git rev-list -n 1 staging)
+      - run:
+          name: delete staging tag
+          command: git tag -d staging
+      - run:
+          name: checkout most recent commit
+          command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
+      - run:
+          name: add staging tag
+          command: git tag staging
+      - run:
+          name: push to staging branch
+          command: git push origin -u staging
+      # firebase deploy
+
+  rollback_prod:
+    docker:
+      - image: circleci/node:10.15
+    working_directory: ~/repo
+
+    steps:
+      # - checkout
+      # build
+      # test
+      - run:
+          name: checkout production branch
+          command: git checkout $(git rev-list -n 1 production)
+      - run:
+          name: delete production tag
+          command: git tag -d production
+      - run:
+          name: checkout most recent commit
+          command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
+      - run:
+          name: add production tag
+          command: git tag production
+      - run:
+          name: push to production branch
+          command: git push origin -u prodcution
+      # firebase deploy
+
 workflows:
   version: 2
   build:
@@ -63,4 +163,4 @@ workflows:
       - deploy_to_stg:
           filters:
             branches:
-              only: staging
+              only: master
