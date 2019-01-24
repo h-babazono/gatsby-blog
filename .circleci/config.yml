@@ -64,6 +64,9 @@ jobs:
       - run:
           name: merge master to staging
           command: git merge master
+      - run: 
+          name: git commit
+          command: git commit -m 'Merge master to staging on ci.'
       - run:
           name: delete current/stg tag
           command: git tag -d current/stg || echo "there's no current/stg tag"
@@ -96,6 +99,9 @@ jobs:
       - run:
           name: merge staging to production
           command: git merge staging
+      - run: 
+          name: git commit
+          command: git commit -m 'Merge staging to master on ci.'
       - run:
           name: delete current/prod tag
           command: git tag -d current/prod || echo "there's no current/prod tag"
@@ -127,7 +133,7 @@ jobs:
           command: git tag -d current/stg || echo "there's no current/stg tag"
       - run:
           name: checkout most recent commit
-          command: git checkout $(git log --oneline --max-count=1 | awk '{print $1}')
+          command: git checkout $(git log current/stg --oneline --skip=1 --max-count=1 | awk '{print $1}')
           # command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
       - run:
           name: add current/stg tag
@@ -157,7 +163,7 @@ jobs:
           command: git tag -d current/prod || echo "there's no current/prod tag"
       - run:
           name: checkout most recent commit
-          command: git checkout $(git log --oneline --max-count=1 | awk '{print $1}')
+          command: git checkout $(git log current/prod --oneline --skip=1 --max-count=1 | awk '{print $1}')
           # command: git checkout $(git log --oneline --merges --max-count=1 | awk '{print $1}')
       - run:
           name: add current/prod tag
